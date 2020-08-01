@@ -6,7 +6,7 @@ metadata:
   name: test-app
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: test-app
@@ -44,3 +44,25 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: test-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: test-app
+  name: test-app-service
+  namespace: default
+spec:
+  clusterIP: 10.0.12.213
+  externalTrafficPolicy: Cluster
+  ports:
+    - nodePort: 30027
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: test-app
+  sessionAffinity: None
+  type: LoadBalancer
