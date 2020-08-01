@@ -1,13 +1,13 @@
-FROM ubuntu
-
+FROM httpd:2.4
+COPY ./public-html/ /usr/local/apache2/htdocs/
 # File Author / Maintainer
-MAINTAINER rmuktader
+#MAINTAINER rmuktader
 
 # Update the repository sources list
 #RUN apt-get update
 
 # Install and run apache
-RUN apt-get install -y apache2 && apt-get clean
+#RUN apt-get install -y apache2 && apt-get clean
 
 #ENTRYPOINT ["/usr/sbin/apache2", "-k", "start"]
 
